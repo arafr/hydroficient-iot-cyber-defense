@@ -5,24 +5,30 @@ This set up is insecure because anyone can publish and subscribe to topics, no a
 
 # Set up:
 1. Clone or download repo
+```
+https://github.com/arafr/hydroficient-iot-cyber-defense.git
+```
 
-2. Install mosquitto: 
+3. Install mosquitto: 
 [https://mosquitto.org/download/](https://mosquitto.org/download/)
 
 
-3. Create & activate virtual environment
+4. Create & activate virtual environment
 
-```python3 -m venv venv
-source venv/bin/activate```
-
+```
+python3 -m venv venv
+source venv/bin/activate
+```
 4. Install libraries (cryptography and paho-mqtt)
-
-`pip install requirements.txt`
-
+```
+pip install requirements.txt
+```
 5. Start broker
 On a terminal, type 
 
-`mosquitto`
+```
+mosquitto
+```
 
 Broker will start on port 1883 (insecure, no authentication)
 
@@ -30,8 +36,10 @@ Broker will start on port 1883 (insecure, no authentication)
 
 6. Start publisher
 
-`cd insecure-pipeline 
-python3 publisher.py`
+```
+cd insecure-pipeline 
+python3 publisher.py
+```
 
 Publisher will generate and publish messages to topic every 5 seconds.
 
@@ -39,8 +47,10 @@ Publisher will generate and publish messages to topic every 5 seconds.
 
 7. In another terminal, start subscriber:
 
-`cd insecure-pipeline 
-python3 subscriber.py`
+```
+cd insecure-pipeline 
+python3 subscriber.py
+```
 
 Subscriber will subscribe to the same topic and receive messages from publisher.
 
@@ -48,8 +58,9 @@ Subscriber will subscribe to the same topic and receive messages from publisher.
 
 # Vulnerability
 Keep the publisher running. In a new terminal, use a mosquitto command to subscribe to all topics.
-
-`mosquitto_sub -t "#"`
+```
+mosquitto_sub -t "#"
+```
 
 ![vulnerability](/media/vulnerability.png")
 
