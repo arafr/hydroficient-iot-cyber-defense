@@ -12,8 +12,8 @@ This set up is insecure because anyone can publish and subscribe to topics, no a
 
 3. Create & activate virtual environment
 
-`python3 -m venv venv
-source venv/bin/activate`
+```python3 -m venv venv
+source venv/bin/activate```
 
 4. Install libraries (cryptography and paho-mqtt)
 
