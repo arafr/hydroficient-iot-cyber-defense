@@ -52,7 +52,7 @@ python3 subscriber.py
 ```
 We will start seeing readings from publisher. Visually, this looks same as our insecure pipeline, however, now broker is authenticated and readings are encrypted.
 
-# Testing TLS
+# Security Tests
 ![TLS Tests](media/subscriber-tests.png)
 
 Tests passed:
