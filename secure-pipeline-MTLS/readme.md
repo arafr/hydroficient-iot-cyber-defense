@@ -62,6 +62,9 @@ python3 subscriber.py
 ```
 We will start seeing readings from publisher. Visually, this looks same, however, now broker and devices verify each other and readings are encrypted.
 
+# Cost
+Adding mTLS has a connection time overhead. While making the connection, there’s an extra step (server has to verify client). This increase connection time, however, it is a one time cost. Sensors don’t need to connect again for hours or days. Once connection is established, there’s no extra message latency. In our environment, the benefits of mTLS outweigh this cost. 
+
 # Security Tests
 Test1: sensor1 just has CA certificate, connection was refused by broker.
 ```
