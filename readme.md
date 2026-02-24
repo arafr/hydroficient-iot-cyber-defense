@@ -1,5 +1,5 @@
 # Overview
-This project secures the Grand Marina hotel’s HYDROLOGIC water monitoring system by implementing a hardened IoT security pipeline.
+This project secures the Grand Marina hotel’s HYDROLOGIC water monitoring system by implementing a secure IoT pipeline.
 
 It includes:
 
