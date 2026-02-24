@@ -17,7 +17,7 @@ On top of our insecure pipeline, we will add one way TLS for encryption and brok
 
 # Set up instructions
 ### 1. Generate key and certificates
-Generate CA key and self signed certificate:
+Generate CA and server keys, certificates using openSSL:
 [openssl-commands.md](openssl-commands.md)
 
 ### 2. Configure Mosquitto Broker to Use Certificates
