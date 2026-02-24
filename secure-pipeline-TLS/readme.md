@@ -20,13 +20,13 @@ On top of our insecure pipeline, we will add one way TLS for encryption and brok
 Generate CA key and self signed certificate:
 ```
 openssl genrsa -out ca-key.pem 2048
-openssl req -x509 -new -nodes -key ca-key.pem -subj "/CN=VPN CA" -days 3650 -out ca.pem
+openssl req -x509 -new -nodes -key ca-key.pem -subj "/CN=RootCA" -days 3650 -out ca.pem
 ```
 Generate server key and certificate (signed by CA):
 ```
 openssl genrsa -out "server-key.pem" 2048
 
-openssl req -new -key "server-key.pem" -out "server-req.pem" -subj "/CN=server"
+openssl req -new -key "server-key.pem" -out "server-req.pem" -subj "/CN=localhost"
 
 openssl x509 -req -days 365 -in "server-req.pem" -CA ca.pem -CAkey ca-key.pem -CAcreateserial -out "server.pem" -extfile <(echo -e "subjectAltName=DNS:localhost\nextendedKeyUsage=serverAuth")
 ```
