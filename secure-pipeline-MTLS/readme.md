@@ -56,3 +56,19 @@ On another terminal, run subscriber.py:
 python3 subscriber.py
 ```
 We will start seeing readings from publisher. Visually, this looks same, however, now broker and devices verify each other and readings are encrypted.
+
+# Security Tests
+Test1: sensor1 just has CA certificate, connection was refused by broker.
+```
+mqttc.tls_set('certs/ca.pem')
+```
+
+Test2: sensor1 has CA certificate and sensor1 certificate, connection was refused by broker.
+```
+mqttc.tls_set('certs/ca.pem','certs/sensor1.pem')
+```
+
+Test3: sensor1 has CA certificate, sensor1 certificate and private key, connection successful.
+```
+mqttc.tls_set('certs/ca.pem','certs/sensor1.pem','certs/sensor1-key.pem')
+```
