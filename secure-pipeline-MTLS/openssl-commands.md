@@ -17,7 +17,7 @@ openssl x509 -req -days 365 -in "server-req.pem" -CA ca.pem -CAkey ca-key.pem -C
 
 # Create Certificates for Devices, Signed by CA
 ```
-for i in sensor1 sensor2 dashboard1
+for i in sensor1 dashboard1
 do
     openssl genrsa -out "$i-key.pem" 2048
 

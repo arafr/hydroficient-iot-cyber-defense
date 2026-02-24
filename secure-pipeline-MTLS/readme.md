@@ -19,7 +19,7 @@ On top of our TLS pipeline, we will add mTLS for device authentication. After de
 
 # Set up instructions
 ### 1. Generate key and certificates
-Generate key and certificate for CA, server and devices using openSSL:
+Generate key and certificate for CA, server and 2 devices (sensor1, dashboard1) using openSSL:
 [openssl-commands.md](openssl-commands.md)
 
 ### 2. Configure Mosquitto Broker to Use Certificates
@@ -30,12 +30,17 @@ require_certificate true
 ```
 
 ### 3. Upgrade subscriber.py and publisher.py to use mTLS
-Add this line to provide path to CA certificate, device certificate, device private. key. 
+We provide path to devices so they can access CA certificate, device certificate, device private key. 
+
+publisher.py:
 ```
-mqttc.tls_set('certs/ca.pem','certs/X.pem','certs/X-key.pem')
+mqttc.tls_set('certs/ca.pem','certs/sensor1.pem','certs/sensor1-key.pem')
 ```
 
-I have configured sensor1 as publisher, dashboard1 as subscriber.
+subscriber.py:
+```
+mqttc.tls_set('certs/ca.pem','certs/dashboard1.pem','certs/dashboard1-key.pem')
+```
 
 ### 4. Test if mTLS is working
 ![mTLS Tests](media/mtls-test.png)
