@@ -11,7 +11,7 @@ On top of our insecure pipeline, we will add one way TLS for encryption and brok
 4. If yes, that means the CA vouches for the broker's identity, it is legit. Communication will be established and readings will be encrypted/decrypted using a shared shared symmetric key. If no, broker will be deemed fake and communication will be rejected.
 
 # Set up instructions
-###### 1. Generate key and certificates
+### 1. Generate key and certificates
 Generate CA key and self signed certificate:
 ```
 openssl genrsa -out ca-key.pem 2048
@@ -26,7 +26,7 @@ openssl req -new -key "server-key.pem" -out "server-req.pem" -subj "/CN=server"
 openssl x509 -req -days 365 -in "server-req.pem" -CA ca.pem -CAkey ca-key.pem -CAcreateserial -out "server.pem" -extfile <(echo -e "subjectAltName=DNS:localhost\nextendedKeyUsage=serverAuth")
 ```
 
-###### 2. Configure Mosquitto Broker to Use Certificates
+### 2. Configure Mosquitto Broker to Use Certificates
 Create mosquitto-tls.conf file and provide certificates, key:
 ```
 listener 8883
@@ -39,7 +39,7 @@ allow_anonymous true
 require_certificate false
 ```
 
-###### 3. Upgrade subscriber.py and publisher.py to use TLS
+### 3. Upgrade subscriber.py and publisher.py to use TLS
 Change this line to connect over port 8883 (MQTTS) instead of 1883.
 ```
 mqttc.connect("localhost", 8883)
@@ -50,7 +50,7 @@ Add this line to provide CA certificate path:
 mqttc.tls_set('certs/ca.pem')
 ```
 
-###### 4. Test if TLS is working
+### 4. Test if TLS is working
 Start mosquitto broker with TLS configuration (provide proper path to conf file):
 ```
 mosquitto -c mosquitto-tls.conf -v      
