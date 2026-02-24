@@ -1,6 +1,11 @@
 # Overview
 On top of our insecure pipeline, we will add one way TLS for encryption and broker authentication. The subscriber, publisher will verify the broker's identity before transferring readings. This prevents attackers from setting up a fake broker and stealing readings from sensors. Additionally, readings will be encrypted in transit so anyone other than the broker can't view our data.
 
+# Protections added to pipeline:
+1. Encryption
+2. Authentication (server or/and client proves they are not an imposter) (authN is done using digital certificates, it proves identity)
+3. Data modification in transit protection (message integrity check)
+
 # One Way TLS Handshake Overview
 1. Sensor will send hello to mosquitto broker.
 
@@ -70,6 +75,11 @@ We will start seeing readings from publisher. Visually, this looks same as our i
 
 # Testing TLS
 ![TLS Tests](media/subscriber-tests.png)
+
+Tests passed:
+* Eavesdropping (no ca certificate)
+* Expired certificate test
+* Wrong certificate
 
 # Vulnerability
 In this set up, only the broker is being authenticated, not the sensor. That means anyone with the CA certificate can create a fake sensor and send fake readings to broker. In mTLS (mutual TLS), both broker and sensors will be authenticated using CA's signature.
