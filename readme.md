@@ -9,7 +9,29 @@ It includes:
 
 * Real-time monitoring dashboard for water flow, pressure, and remote shutoff controls.
 
-| Links |
+# Set up
+### 1. Clone or download repo
+```
+https://github.com/arafr/hydroficient-iot-cyber-defense.git
+```
+
+### 2. Install mosquitto: 
+[https://mosquitto.org/download/](https://mosquitto.org/download/)
+
+
+### 3. Create & activate virtual environment
+
+```
+python3 -m venv venv
+source venv/bin/activate
+```
+### 4. Install dependencies
+```
+pip install paho-mqtt
+```
+
+# Links
+| Project |
 | ------------- |
 | [Threat Model with STRIDE Analysis](threat-model-stride.pdf/) |
 | [Insecure Pipeline](insecure-pipeline/) |
