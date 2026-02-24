@@ -13,7 +13,7 @@ On top of our insecure pipeline, we will add one way TLS for encryption and brok
 
 3. Sensor will use CA certificate to check if the server certificate is signed by the CA.
 
-4. If yes, that means the CA vouches for the broker's identity, it is legit. Communication will be established and readings will be encrypted/decrypted using a shared shared symmetric key. If no, broker will be deemed fake and communication will be rejected.
+4. Encrypted data will be sent using server's public key, which can only be decrypted by server's private key. This makes sure only the real server holding the private key can decrypt data.
 
 # Set up instructions
 ### 1. Generate key and certificates
