@@ -69,7 +69,7 @@ python3 subscriber.py
 We will start seeing readings from publisher. Visually, this looks same as our insecure pipeline, however, now broker is authenticated and readings are encrypted.
 
 # Testing TLS
-![TLS Tests](/media/subscriber-tests.png")
+![TLS Tests](/media/subscriber-tests.png)
 
 # Vulnerability
 In this set up, only the broker is being authenticated, not the sensor. That means anyone with the CA certificate can create a fake sensor and send fake readings to broker. In mTLS (mutual TLS), both broker and sensors will be authenticated using CA's signature.
