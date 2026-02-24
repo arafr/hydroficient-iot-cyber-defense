@@ -1,4 +1,4 @@
-docs: https://learn.microsoft.com/en-us/azure/vpn-gateway/point-to-site-certificates-linux-openssl
+Note: Instead of the cryptography library, I used openSSL to generate keys and certificates. I found it easier to learn and write commands.
 
 # Create CA Certificate
 ```
@@ -14,3 +14,5 @@ openssl req -new -key "server-key.pem" -out "server-req.pem" -subj "/CN=localhos
 
 openssl x509 -req -days 365 -in "server-req.pem" -CA ca.pem -CAkey ca-key.pem -CAcreateserial -out "server.pem" -extfile <(echo -e "subjectAltName=DNS:localhost\nextendedKeyUsage=serverAuth")
 ```
+
+docs: https://learn.microsoft.com/en-us/azure/vpn-gateway/point-to-site-certificates-linux-openssl
