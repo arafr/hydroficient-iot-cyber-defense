@@ -76,14 +76,15 @@ Run [tests/test2-no-cert.py](tests/test2-no-cert.py) that only points to a CA ce
 mqttc.tls_set('../certs/ca.pem')
 ```
 Error: peer did not return a certificate. Broker rejected the connection, test passed.
-![no-device-certificate](../media/test2.png)
+
+![no-device-certificate](media/test2.png)
 
 ### Test 3: Can a device with a certificate from a different CA connect?
 Generate differerent CA key, cert and device key, certificate (signed by different CA): [tests/generate-keys-certs.md](tests/generate-keys-certs.md)
 
 Run [tests/test3-different-ca.py](tests/test2-no-cert.py) that points to a device certificate signed by a different CA (not trusted by broker).
 
-![test3](../media/test3.png)
+![test3](media/test3.png)
 
 [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1000)
 
@@ -93,7 +94,7 @@ Test passed.
 Generate expired certificate: [generate-keys-certs.md](generate-keys-certs.md)
 Run [tests/test4-expired-cert.py](tests/test4-expired-cert.py) that only points to a an expired device certificate signed by the trusted CA.
 
-![test4](../media/test4.png)
+![test4](media/test4.png)
 
 OpenSSL Error while trying to get the error[0]: error:0A000086:SSL routines::certificate verify failed.
 
