@@ -93,7 +93,7 @@ Test passed.
 ### Test 4: Can a device with an expired certificate connect?
 Generate expired certificate: [generate-keys-certs.md](generate-keys-certs.md)
 
-Run [tests/test4-expired-cert.py](tests/test4-expired-cert.py) that only points to a an expired device certificate signed by the trusted CA.
+Run [tests/test4-expired-cert.py](tests/test4-expired-cert.py) that points to a an expired device certificate signed by the trusted CA.
 
 ![test4](media/test4.png)
 
