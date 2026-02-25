@@ -2,3 +2,4 @@ venv
 ___pycache___
 insecure-pipeline/.DS_Store
 .DS_Store
+secure-pipeline-MTLS/certs/*
