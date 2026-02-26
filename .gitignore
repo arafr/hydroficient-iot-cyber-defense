@@ -2,6 +2,12 @@ venv
 ___pycache___
 insecure-pipeline/.DS_Store
 .DS_Store
+
 secure-pipeline-TLS/certs/*
+!secure-pipeline-TLS/certs/.gitkeep
+
 secure-pipeline-MTLS/certs/*
+!secure-pipeline-MTLS/certs/.gitkeep
+
 secure-pipeline-MTLS/tests/certs/*
+!secure-pipeline-MTLS/tests/certs/.gitkeep
