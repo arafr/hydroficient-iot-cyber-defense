@@ -80,7 +80,7 @@ Error: peer did not return a certificate. Broker rejected the connection, test p
 ![no-device-certificate](media/test2.png)
 
 ### Test 3: Can a device with a certificate from a different CA connect?
-Generate differerent CA key, cert and device key, certificate (signed by different CA): [tests/generate-keys-certs.md](tests/generate-keys-certs.md)
+Generate differerent CA key, cert and device key, certificate (signed by different CA): [tests/generate-test-keys-certs.md](tests/generate-test-keys-certs.md)
 
 Run [tests/test3-different-ca.py](tests/test2-no-cert.py) that points to a device certificate signed by a different CA (not trusted by broker).
 
@@ -91,7 +91,7 @@ Run [tests/test3-different-ca.py](tests/test2-no-cert.py) that points to a devic
 Test passed.
 
 ### Test 4: Can a device with an expired certificate connect?
-Generate expired certificate: [generate-keys-certs.md](generate-keys-certs.md)
+Generate expired certificate: [generate-test-keys-certs.md](generate-test-keys-certs.md)
 
 Run [tests/test4-expired-cert.py](tests/test4-expired-cert.py) that points to a an expired device certificate signed by the trusted CA.
 
