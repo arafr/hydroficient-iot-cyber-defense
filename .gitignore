@@ -11,3 +11,8 @@ secure-pipeline-MTLS/certs/*
 
 secure-pipeline-MTLS/tests/certs/*
 !secure-pipeline-MTLS/tests/certs/.gitkeep
+
+replay-attack-protection/certs/*
+!replay-attack-protection/certs/.gitkeep
+
+.env

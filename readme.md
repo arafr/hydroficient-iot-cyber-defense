@@ -27,7 +27,7 @@ source venv/bin/activate
 ```
 ### 4. Install dependencies
 ```
-pip install paho-mqtt
+pip install -r requirements.txt
 ```
 
 # Links
