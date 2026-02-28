@@ -5,7 +5,9 @@ import hashlib
 import json
 
 import os
-shared_secret = os.environ.get("shared_secret")
+from dotenv import load_dotenv
+load_dotenv()
+shared_secret = os.getenv("SHARED_SECRET")
 
 class WaterSensor:
   def __init__(self,device_id):

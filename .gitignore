@@ -16,3 +16,4 @@ replay-attack-protection/certs/*
 !replay-attack-protection/certs/.gitkeep
 
 .env
+splunk-dashboard

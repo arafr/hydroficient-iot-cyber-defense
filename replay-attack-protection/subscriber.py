@@ -6,7 +6,9 @@ import hmac
 from datetime import datetime, timezone
 
 import os
-shared_secret = os.environ.get("shared_secret")
+from dotenv import load_dotenv
+load_dotenv()
+shared_secret = os.getenv("SHARED_SECRET")
 
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, reason_code, properties):
@@ -22,7 +24,7 @@ def validate_hmac(message,hmac_signature):
     # convert message dictionary to json
     message = json.dumps(message,sort_keys=True)
     # Create a new HMAC object using the secret key and SHA256 hash function
-    hmac_object = hmac.new(secret_key.encode(), message.encode(), hashlib.sha256)
+    hmac_object = hmac.new(shared_secret.encode(), message.encode(), hashlib.sha256)
     # the hexadecimal representation of the HMAC
     computed_signature =  hmac_object.hexdigest()
     # compare sent and recomputed hmac signature
