@@ -38,3 +38,4 @@ pip install -r requirements.txt
 | [Secure Pipeline with TLS](secure-pipeline-TLS/) |
 | [Secure Pipeline with mTLS](secure-pipeline-MTLS/) |
 | [Defeating Replay Attacks ](replay-attack-protection/) |
+| [Splunk Dashboard](splunk-dashboard/) |
