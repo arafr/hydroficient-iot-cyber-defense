@@ -15,5 +15,7 @@ secure-pipeline-MTLS/tests/certs/*
 replay-attack-protection/certs/*
 !replay-attack-protection/certs/.gitkeep
 
+splunk-dashboard/certs/*
+!splunk-dashboard/certs/.gitkeep
+
 .env
-splunk-dashboard
