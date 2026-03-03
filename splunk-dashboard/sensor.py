@@ -36,31 +36,33 @@ class WaterSensor:
       "pressure_down":self.pressure_down + round(random.uniform(-2,2),1),
       "flow_rate":self.flow_rate + round(random.uniform(-2,2),1)
     }
+
+    # simulate anomalies (1 in 50 chance)
+    if random.randint(1,50)==1:
+      random.choice([self.simulate_leak, self.simulate_blockage,self.simulate_stuck])(message)
+
     # generate hmac signature of the message dictionary
     hmac_signature = self.generate_hmac(shared_secret, message)
     # add hmac signature to message dictionary
     message['hmac'] = hmac_signature
+
     return message
-  # introduce anomalies
+  
+  # anomaly functions
   # leak means high flow rate
-  def simulate_leak(self):
-    reading = self.generate_reading()
-    reading['flow_rate'] = round(random.uniform(80,120),1)
-    reading['anomaly']='leak'
-    return reading
+  def simulate_leak(self,message):
+    message['flow_rate'] = round(random.uniform(80,120),1)
+    message['anomaly']='leak'
   # blockage (high upstream, low downstream pressure)
-  def simulate_blockage(self):
-    reading = self.generate_reading()
-    reading['pressure_up'] = round(random.uniform(100,120),1)
-    reading['pressure_down'] = round(random.uniform(40,70),1)
-    reading['anomaly']='blockage'
-    return reading
+  def simulate_blockage(self,message):
+    message['pressure_up'] = round(random.uniform(100,120),1)
+    message['pressure_down'] = round(random.uniform(40,70),1)
+    message['anomaly']='blockage'
   # stuck sensor (same values)
-  def simulate_stuck(self):
-    reading = self.generate_reading()
+  def simulate_stuck(self,message):
     stuck_value = round(random.uniform(70,90),1) # generate random stuck value
-    reading['pressure_up'] = stuck_value
-    reading['pressure_down'] = stuck_value
-    reading['flow_rate']=stuck_value
-    reading['anomaly']='stuck'
-    return reading
+    message['pressure_up'] = stuck_value
+    message['pressure_down'] = stuck_value
+    message['flow_rate']=stuck_value
+    message['anomaly']='stuck'
+    return message
