@@ -33,7 +33,7 @@ while len(unacked_publish):
     time.sleep(0.1)
 
 from sensor import WaterSensor
-test_sensor = WaterSensor('test-sensor-1')
+test_sensor = WaterSensor('device-1')
 # MODIFIED MESSAGE TEST
 print('-'*50)
 print("TEST 1: Replaying Modified Message")
