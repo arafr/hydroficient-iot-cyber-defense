@@ -1,0 +1,247 @@
+<form version="1.1" theme="dark">
+  <label>marina-dashboard-classic</label>
+  <fieldset submitButton="false">
+    <input type="time" token="time_range1">
+      <label>Time range</label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <single>
+        <title>Main Building Reading Time</title>
+        <search>
+          <query>index="grand-marina-hotel" device_id="device-1" status="accepted"
+| table time | head 1</query>
+          <earliest>rt-10s</earliest>
+          <latest>rtnow</latest>
+        </search>
+        <option name="drilldown">all</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
+    </panel>
+    <panel>
+      <single>
+        <title>Main Building Pressure Upstream</title>
+        <search>
+          <query>index="grand-marina-hotel" device_id="device-1" status="accepted"
+| table pressure_up |  head 1</query>
+          <earliest>rt-10s</earliest>
+          <latest>rtnow</latest>
+        </search>
+        <option name="colorMode">none</option>
+        <option name="rangeColors">["0x118832","0x118832"]</option>
+        <option name="rangeValues">[0]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel>
+      <single>
+        <title>Main Building Pressure Downstream</title>
+        <search>
+          <query>index="grand-marina-hotel" device_id="device-1" status="accepted"
+| table pressure_down |  head 1</query>
+          <earliest>rt-10s</earliest>
+          <latest>rtnow</latest>
+        </search>
+        <option name="colorMode">none</option>
+        <option name="rangeColors">["0x118832","0x118832"]</option>
+        <option name="rangeValues">[0]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel>
+      <single>
+        <title>Main Building Flow Rate</title>
+        <search>
+          <query>index="grand-marina-hotel" device_id="device-1" status="accepted" 
+| table flow_rate |  head 1</query>
+          <earliest>rt-10s</earliest>
+          <latest>rtnow</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="rangeColors">["0x118832","0x118832"]</option>
+        <option name="rangeValues">[0]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <single>
+        <title>East Wing Reading Time</title>
+        <search>
+          <query>index="grand-marina-hotel" device_id="device-2" status="accepted"
+| table time | head 1</query>
+          <earliest>rt-10s</earliest>
+          <latest>rtnow</latest>
+        </search>
+        <option name="drilldown">all</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
+    </panel>
+    <panel>
+      <single>
+        <title>East Wing Pressure Upstream</title>
+        <search>
+          <query>index="grand-marina-hotel" device_id="device-2" status="accepted"
+| table pressure_up |  head 1</query>
+          <earliest>rt-10s</earliest>
+          <latest>rtnow</latest>
+        </search>
+        <option name="rangeColors">["0x118832","0x118832"]</option>
+        <option name="rangeValues">[0]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel>
+      <single>
+        <title>East Wing Pressure Downstream</title>
+        <search>
+          <query>index="grand-marina-hotel" device_id="device-2" status="accepted"
+| table pressure_down |  head 1</query>
+          <earliest>rt-10s</earliest>
+          <latest>rtnow</latest>
+        </search>
+        <option name="rangeColors">["0x118832","0x118832"]</option>
+        <option name="rangeValues">[0]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel>
+      <single>
+        <title>East Wing Flow Rate</title>
+        <search>
+          <query>index="grand-marina-hotel" device_id="device-2" status="accepted" 
+| table flow_rate |  head 1</query>
+          <earliest>rt-10s</earliest>
+          <latest>rtnow</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="rangeColors">["0x118832","0x118832"]</option>
+        <option name="rangeValues">[0]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Attack Alerts</title>
+        <search>
+          <query>index="grand-marina-hotel" status="rejected"
+|  table date time device_id status reason 
+|  sort asc - time</query>
+          <earliest>$time_range1.earliest$</earliest>
+          <latest>$time_range1.latest$</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+    <panel>
+      <table>
+        <title>Pressure &amp; Flow Alerts</title>
+        <search>
+          <query>index="grand-marina-hotel" status="accepted" (pressure_up&gt;=100 OR pressure_up&lt;=60 OR flow_rate&gt;=60 OR flow_rate&lt;=20  OR (pressure_up=pressure_down AND pressure_down=flow_rate))
+|  table date time anomaly status device_id pressure_up flow_rate
+|  sort asc - time</query>
+          <earliest>$time_range1.earliest$</earliest>
+          <latest>$time_range1.latest$</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <single>
+        <title>Total Messages</title>
+        <search>
+          <query>index="grand-marina-hotel" status="rejected" OR status="accepted"
+|  stats count</query>
+          <earliest>$time_range1.earliest$</earliest>
+          <latest>$time_range1.latest$</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="colorMode">block</option>
+        <option name="drilldown">none</option>
+        <option name="rangeColors">["0x1182f3","0x1182f3"]</option>
+        <option name="rangeValues">[0]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel>
+      <single>
+        <title>Accepted Messages</title>
+        <search>
+          <query>index="grand-marina-hotel" status="accepted"
+|  stats count</query>
+          <earliest>$time_range1.earliest$</earliest>
+          <latest>$time_range1.latest$</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="colorMode">block</option>
+        <option name="drilldown">none</option>
+        <option name="rangeColors">["0x118832","0x118832"]</option>
+        <option name="rangeValues">[0]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel>
+      <single>
+        <title>Rejected Messages</title>
+        <search>
+          <query>index="grand-marina-hotel" status="rejected"
+|  stats count</query>
+          <earliest>$time_range1.earliest$</earliest>
+          <latest>$time_range1.latest$</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="colorMode">block</option>
+        <option name="drilldown">none</option>
+        <option name="rangeColors">["0xd41f1f","0xdc4e41"]</option>
+        <option name="rangeValues">[0]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Raw Logs</title>
+        <search>
+          <query>index="grand-marina-hotel"
+| sort - _time
+| table _raw</query>
+          <earliest>$time_range1.earliest$</earliest>
+          <latest>$time_range1.latest$</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+</form>
