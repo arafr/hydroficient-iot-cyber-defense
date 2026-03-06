@@ -17,13 +17,7 @@ class WaterSensor:
     self.pressure_up = 82
     self.pressure_down = 80
     self.flow_rate = 40
-  def generate_hmac(self,shared_secret, message):
-    # convert message dictionary to json
-    message = json.dumps(message,sort_keys=True)
-    # Create a new HMAC object using the shared_secret and SHA256 hash function
-    hmac_object = hmac.new(shared_secret.encode(), message.encode(), hashlib.sha256)
-    # Return the hexadecimal representation of the HMAC
-    return hmac_object.hexdigest()
+
   def generate_reading(self):
     self.counter+=1
     message = {
@@ -36,33 +30,35 @@ class WaterSensor:
       "pressure_down":self.pressure_down + round(random.uniform(-2,2),1),
       "flow_rate":self.flow_rate + round(random.uniform(-2,2),1)
     }
-
-    # simulate anomalies (1 in 50 chance)
-    if random.randint(1,50)==1:
-      random.choice([self.simulate_leak, self.simulate_blockage,self.simulate_stuck])(message)
-
-    # generate hmac signature of the message dictionary
-    hmac_signature = self.generate_hmac(shared_secret, message)
-    # add hmac signature to message dictionary
-    message['hmac'] = hmac_signature
-
     return message
+
+  # final stage, no changes can be made to message after hmac is generated.
+  def generate_hmac(self, message):
+    # convert message dictionary to json
+    message = json.dumps(message,sort_keys=True)
+    # Create a new HMAC object using the shared_secret and SHA256 hash function
+    hmac_object = hmac.new(shared_secret.encode(), message.encode(), hashlib.sha256)
+    # Return the hexadecimal representation of the HMAC
+    hmac_signature =  hmac_object.hexdigest()
+    return hmac_signature
   
   # anomaly functions
   # leak means high flow rate
   def simulate_leak(self,message):
     message['flow_rate'] = round(random.uniform(80,120),1)
-    message['anomaly']='leak'
+    message['issue']='leak'
+    return message
   # blockage (high upstream, low downstream pressure)
   def simulate_blockage(self,message):
     message['pressure_up'] = round(random.uniform(100,120),1)
     message['pressure_down'] = round(random.uniform(40,70),1)
-    message['anomaly']='blockage'
+    message['issue']='blockage'
+    return message
   # stuck sensor (same values)
   def simulate_stuck(self,message):
     stuck_value = round(random.uniform(70,90),1) # generate random stuck value
     message['pressure_up'] = stuck_value
     message['pressure_down'] = stuck_value
     message['flow_rate']=stuck_value
-    message['anomaly']='stuck'
+    message['issue']='stuck'
     return message

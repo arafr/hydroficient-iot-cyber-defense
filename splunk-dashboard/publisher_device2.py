@@ -35,6 +35,7 @@ sensor2 = WaterSensor('device-2')
 while True:
   try:
     reading=sensor2.generate_reading()
+    reading['hmac'] = sensor2.generate_hmac(reading)
     msg_info = mqttc.publish("hydroficient/grandmarina/east-wing/readings", json.dumps(reading), qos=1)
     unacked_publish.add(msg_info.mid)
     print("published: " + json.dumps(reading))

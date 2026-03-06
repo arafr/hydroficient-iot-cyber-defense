@@ -30,13 +30,24 @@ mqttc.connect("localhost",8883)
 mqttc.tls_set('certs/ca.pem','certs/sensor1.pem','certs/sensor1-key.pem')
 mqttc.loop_start()
 
+issue_type = int(input("Enter issue type 1. Leak 2. Blockage 3. Stuck sensor: "))
 # Our application produce some messages
-sensor1 = WaterSensor('device-1')
+sensor2 = WaterSensor('device-1')
 while True:
   try:
-    reading=sensor1.generate_reading()
-    reading['hmac'] = sensor1.generate_hmac(reading)
-    msg_info = mqttc.publish("hydroficient/grandmarina/main-building/readings", json.dumps(reading), qos=1)
+    reading = sensor2.generate_reading()
+    if issue_type == 1:
+       reading = sensor2.simulate_leak(reading)
+    elif issue_type ==2:
+       reading = sensor2.simulate_blockage(reading)
+    elif issue_type ==3:
+       reading = sensor2.simulate_stuck(reading)
+    else:
+       print("Invalid issue type (please only enter 1,2 or 3).")
+       break
+    reading['hmac'] = sensor2.generate_hmac(reading)
+
+    msg_info = mqttc.publish("hydroficient/grandmarina/east-wing/readings", json.dumps(reading), qos=1)
     unacked_publish.add(msg_info.mid)
     print("published: " + json.dumps(reading))
     time.sleep(5)

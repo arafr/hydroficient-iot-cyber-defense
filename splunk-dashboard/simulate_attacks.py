@@ -38,6 +38,7 @@ test_sensor = WaterSensor('device-1')
 print('-'*50)
 print("TEST 1: Replaying Modified Message")
 reading=test_sensor.generate_reading()
+reading['hmac'] = test_sensor.generate_hmac(reading)
 # editing flow_rate, this changes the hmac signature of the message.
 reading['flow_rate']=90
 msg_info = mqttc.publish("hydroficient/grandmarina/main-building/readings", json.dumps(reading), qos=1)
@@ -49,6 +50,7 @@ print('-'*50)
 print('-'*50)
 print("TEST 2: Replaying Aged Message")
 reading=test_sensor.generate_reading()
+reading['hmac'] = test_sensor.generate_hmac(reading)
 print("Waiting 30 seconds for message to age, then it will be published.")
 time.sleep(31)
 msg_info = mqttc.publish("hydroficient/grandmarina/main-building/readings", json.dumps(reading), qos=1)
@@ -61,6 +63,7 @@ print('-'*50)
 print("TEST 3: Replaying Same Message")
 # we generate and publish an acceptable message
 reading=test_sensor.generate_reading()
+reading['hmac'] = test_sensor.generate_hmac(reading)
 msg_info = mqttc.publish("hydroficient/grandmarina/main-building/readings", json.dumps(reading), qos=1)
 unacked_publish.add(msg_info.mid)
 print("published: " + json.dumps(reading))
@@ -69,7 +72,6 @@ msg_info = mqttc.publish("hydroficient/grandmarina/main-building/readings", json
 unacked_publish.add(msg_info.mid)
 print("published: " + json.dumps(reading))
 print('-'*50)
-
 
 # Due to race-condition described above, the following way to wait for all publish is safer
 msg_info.wait_for_publish()
