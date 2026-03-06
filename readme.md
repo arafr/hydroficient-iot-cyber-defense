@@ -7,7 +7,17 @@ It includes:
 
 * Replay attack protection using timestamp validation, counters, and HMAC message signing.
 
-* Real-time monitoring dashboard for water flow, pressure, and remote shutoff controls.
+* Real-time monitoring dashboard for water flow, pressure, water issues and attack alerts.
+
+# Links
+| Project |
+| ------------- |
+| [Threat Model with STRIDE Analysis](threat-model-stride.pdf/) |
+| [Insecure Pipeline](insecure-pipeline/) |
+| [Secure Pipeline with TLS](secure-pipeline-TLS/) |
+| [Secure Pipeline with mTLS](secure-pipeline-MTLS/) |
+| [Defeating Replay Attacks ](replay-attack-protection/) |
+| [Splunk Dashboard](splunk-dashboard/) |
 
 # Set up
 ### 1. Clone or download repo
@@ -29,13 +39,3 @@ source venv/bin/activate
 ```
 pip install -r requirements.txt
 ```
-
-# Links
-| Project |
-| ------------- |
-| [Threat Model with STRIDE Analysis](threat-model-stride.pdf/) |
-| [Insecure Pipeline](insecure-pipeline/) |
-| [Secure Pipeline with TLS](secure-pipeline-TLS/) |
-| [Secure Pipeline with mTLS](secure-pipeline-MTLS/) |
-| [Defeating Replay Attacks ](replay-attack-protection/) |
-| [Splunk Dashboard](splunk-dashboard/) |
