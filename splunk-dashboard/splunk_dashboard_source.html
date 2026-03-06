@@ -33,9 +33,10 @@
           <latest>rtnow</latest>
         </search>
         <option name="colorMode">none</option>
-        <option name="rangeColors">["0x118832","0x118832"]</option>
-        <option name="rangeValues">[0]</option>
+        <option name="rangeColors">["0xd94e17","0x118832","0xd94e17"]</option>
+        <option name="rangeValues">[60,85]</option>
         <option name="refresh.display">progressbar</option>
+        <option name="unit">PSI</option>
         <option name="useColors">1</option>
       </single>
     </panel>
@@ -49,9 +50,10 @@
           <latest>rtnow</latest>
         </search>
         <option name="colorMode">none</option>
-        <option name="rangeColors">["0x118832","0x118832"]</option>
-        <option name="rangeValues">[0]</option>
+        <option name="rangeColors">["0xd94e17","0x118832","0xd94e17"]</option>
+        <option name="rangeValues">[65,85]</option>
         <option name="refresh.display">progressbar</option>
+        <option name="unit">PSI</option>
         <option name="useColors">1</option>
       </single>
     </panel>
@@ -65,9 +67,10 @@
           <latest>rtnow</latest>
         </search>
         <option name="drilldown">none</option>
-        <option name="rangeColors">["0x118832","0x118832"]</option>
-        <option name="rangeValues">[0]</option>
+        <option name="rangeColors">["0xd41f1f","0x118832","0xd41f1f"]</option>
+        <option name="rangeValues">[35,50]</option>
         <option name="refresh.display">progressbar</option>
+        <option name="unit">LPM</option>
         <option name="useColors">1</option>
       </single>
     </panel>
@@ -98,6 +101,7 @@
         <option name="rangeColors">["0x118832","0x118832"]</option>
         <option name="rangeValues">[0]</option>
         <option name="refresh.display">progressbar</option>
+        <option name="unit">PSI</option>
         <option name="useColors">1</option>
       </single>
     </panel>
@@ -113,6 +117,7 @@
         <option name="rangeColors">["0x118832","0x118832"]</option>
         <option name="rangeValues">[0]</option>
         <option name="refresh.display">progressbar</option>
+        <option name="unit">PSI</option>
         <option name="useColors">1</option>
       </single>
     </panel>
@@ -129,6 +134,7 @@
         <option name="rangeColors">["0x118832","0x118832"]</option>
         <option name="rangeValues">[0]</option>
         <option name="refresh.display">progressbar</option>
+        <option name="unit">LPM</option>
         <option name="useColors">1</option>
       </single>
     </panel>
@@ -136,34 +142,41 @@
   <row>
     <panel>
       <table>
-        <title>Attack Alerts</title>
+        <title>Rejected Messages</title>
         <search>
           <query>index="grand-marina-hotel" status="rejected"
-|  table date time device_id status reason 
+|  table date time reason  _raw | rename _raw as message
 |  sort asc - time</query>
           <earliest>$time_range1.earliest$</earliest>
           <latest>$time_range1.latest$</latest>
           <refresh>30s</refresh>
           <refreshType>delay</refreshType>
         </search>
+        <option name="count">5</option>
         <option name="drilldown">none</option>
-        <option name="refresh.display">progressbar</option>
+        <format type="color" field="reason">
+          <colorPalette type="expression">case(true(), "#ffcccc")</colorPalette>
+        </format>
       </table>
     </panel>
     <panel>
       <table>
-        <title>Pressure &amp; Flow Alerts</title>
+        <title>Water Issue Alerts</title>
         <search>
-          <query>index="grand-marina-hotel" status="accepted" (pressure_up&gt;=100 OR pressure_up&lt;=60 OR flow_rate&gt;=60 OR flow_rate&lt;=20  OR (pressure_up=pressure_down AND pressure_down=flow_rate))
-|  table date time anomaly status device_id pressure_up flow_rate
-|  sort asc - time</query>
+          <query>index="grand-marina-hotel" status="accepted" (pressure_up&gt;=100 OR flow_rate&gt;=60 OR flow_rate&lt;=20 OR (pressure_up=pressure_down AND pressure_down=flow_rate))
+|  table date time issue device_id pressure_up pressure_down flow_rate
+|  sort asc - date - time</query>
           <earliest>$time_range1.earliest$</earliest>
           <latest>$time_range1.latest$</latest>
           <refresh>30s</refresh>
           <refreshType>delay</refreshType>
         </search>
+        <option name="count">7</option>
         <option name="drilldown">none</option>
         <option name="refresh.display">progressbar</option>
+        <format type="color" field="issue">
+          <colorPalette type="expression">case(true(), "#ffcccc")</colorPalette>
+        </format>
       </table>
     </panel>
   </row>
@@ -224,24 +237,6 @@
         <option name="refresh.display">progressbar</option>
         <option name="useColors">1</option>
       </single>
-    </panel>
-  </row>
-  <row>
-    <panel>
-      <table>
-        <title>Raw Logs</title>
-        <search>
-          <query>index="grand-marina-hotel"
-| sort - _time
-| table _raw</query>
-          <earliest>$time_range1.earliest$</earliest>
-          <latest>$time_range1.latest$</latest>
-          <refresh>30s</refresh>
-          <refreshType>delay</refreshType>
-        </search>
-        <option name="drilldown">none</option>
-        <option name="refresh.display">progressbar</option>
-      </table>
     </panel>
   </row>
 </form>
